@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'content/css/home.css' %}">
+{% endblock %}
+{% block 'body' %}
+<div class="container">
+  <br>
+  <button type="button" class="btn_filter" data-toggle="modal" data-target="#exampleModal">
+    FILTER
+  </button>
+  <div class="row">
+    {% for property in properties %}
+    <div class="col-md cont">
+      <div class="card_property">
+        <img class="img_cover_property" src="{{property.image.all.0.img.url}}">
+        <div class="information_properties">
+          <a class="a_none" href="{% url 'property' property.id %}">
+            <h4 class="value">€ {{property.value}}</h4>
+          </a>
+          <p>{{property.street}}, {{property.city}}</p>
+          <br>
+          <img width="7%" src="{% static 'content/img/heart.png' %}">
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title title_filter" id="exampleModalLabel">FILTER</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'home' %}" method="GET">
+          <label>Price min</label>
+          <br>
+          <input name="price_min" class="form-control" type="number" placeholder="€ 00">
+
+          <br>
+
+          <label>Price max</label>
+          <br>
+          <input name="price_max" class="form-control" type="number" placeholder="€ 200000000">
+
+          <br>
+
+          <label>City</label>
+          <br>
+          <select name="city" class="form-control">
+            {% for city in cities %}
+              <option value="{{city.id}}">{{city.name}}</option>
+            {% endfor %}
+          </select>
+
+          <br>
+
+          <label>Type</label>
+          <br>
+
+          <input name="type" type="checkbox" value="A"><label>&nbspApartment</label>
+          <br>
+          <input name="type" type="checkbox" value="H"><label>&nbspHouse</label>
+          <br>
+          <br>
+          <input class="btn_filter_modal" type="submit" value="FILTER">
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

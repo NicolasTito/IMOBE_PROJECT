@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+		"octref.vetur",
+		"batisteo.vscode-django",
+		"wholroyd.jinja"
+	]
+}
